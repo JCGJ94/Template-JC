@@ -1,44 +1,38 @@
-// Import necessary components from react-router-dom and other parts of the application.
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer"; // Custom hook for accessing the global state.
-import { storeActions } from "../store/types";
+
+const palette = ["#f97316", "#22d3ee", "#a855f7", "#84cc16", "#facc15"];
 
 export const Demo = () => {
-  // Access the global state and dispatch function using the useGlobalReducer hook.
-  const { store, dispatch } = useGlobalReducer();
+  const [colorIndex, setColorIndex] = useState(0);
+
+  const handleCycle = () => {
+    setColorIndex((index) => (index + 1) % palette.length);
+  };
 
   return (
-    <div className="container">
-      <ul className="list-group">
-        {/* Map over the 'todos' array from the store and render each item as a list element */}
-        {store &&
-          store.todos?.map((item) => {
-            return (
-              <li
-                key={item.id} // React key for list items.
-                className="list-group-item d-flex justify-content-between"
-                style={{ background: item.background }}
-              >
-                {/* Link to the detail page of this todo. */}
-                <Link to={"/single/" + item.id}>Link to: {item.title} </Link>
-
-                <p>Open file ./store/index.js to see the global store that contains and updates the list of colors</p>
-
-                <button
-                  className="btn btn-success"
-                  onClick={() => dispatch(storeActions.updateTodoColor(item.id, "#ffa500"))}
-                >
-                  Change Color
-                </button>
-              </li>
-            );
-          })}
-      </ul>
-      <br />
-
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
-      </Link>
+    <div className="container py-5">
+      <div className="card shadow border-0 mx-auto" style={{ maxWidth: "640px" }}>
+        <div className="card-body text-center d-grid gap-4">
+          <h2 className="fw-semibold">Texto interactivo</h2>
+          <p className="mb-0 text-muted">
+            Haz clic en el texto o en el botón para alternar rápidamente entre los colores de la paleta.
+          </p>
+          <p
+            className="fs-3 fw-bold"
+            style={{ color: palette[colorIndex], cursor: "pointer" }}
+            onClick={handleCycle}
+          >
+            JC DevTemplate
+          </p>
+          <button type="button" className="btn btn-dark mx-auto" onClick={handleCycle}>
+            Cambiar color
+          </button>
+          <Link to="/" className="btn btn-outline-secondary">
+            Volver al inicio
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
