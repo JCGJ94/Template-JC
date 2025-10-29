@@ -1,81 +1,149 @@
-# Plantilla de WebApp con React JS y Flask API
+# Plantilla Fullstack JC-Code
 
-Construye aplicaciones web usando React.js para el front end y python/flask para tu API backend.
+![Logo JC-Code](public/jc-code-logo.svg)
 
-- La documentación se puede encontrar aquí: https://4geeks.com/docs/start/react-flask-template
-- Aquí hay un video sobre [cómo usar esta plantilla](https://www.youtube.com/watch?v=qBz6Ddd2m38)
-- Integrado con Pipenv para la gestión de paquetes.
-- Despliegue rápido a Render [en solo unos pocos pasos aquí](https://4geeks.com/es/docs/start/despliega-con-render-com).
-- Uso del archivo .env.
-- Integración de SQLAlchemy para la abstracción de bases de datos.
+Una plantilla ligera pero profesional creada por **JCGJ94** para seguir creciendo como desarrollador joven en el mundo tech. Este repositorio conecta un frontend moderno en React con un backend modular en Flask para que avances rápido en proyectos personales, MVPs y productos listos para producción.
 
-### 1) Instalación:
+> Looking for the English version? [Click here](README.md).
 
-> Si usas Github Codespaces (recomendado) o Gitpod, esta plantilla ya vendrá con Python, Node y la base de datos Posgres instalados. Si estás trabajando localmente, asegúrate de instalar Python 3.10, Node.
+## Destacados
 
-Se recomienda instalar el backend primero, asegúrate de tener Python 3.10, Pipenv y un motor de base de datos (se recomienda Posgres).
+- ⚛️ **Frontend:** React (lista para Vite) con configuraciones pensadas para iterar rápido.
+- 🐍 **Backend:** Flask con estructura modular y blueprints orientados a REST.
+- 🔗 **Puente API:** Comunicación lista entre cliente y servidor.
+- ⚙️ **Entornos:** Configuración base para desarrollo y producción.
+- 🧱 **Estructura clara:** Carpetas limpias y escalables para crecer sin caos.
+- 🧩 **Listo para deploy:** Compatible con Render, Vercel, Docker y más.
 
-1. Instala los paquetes de python: `$ pipenv install`
-2. Crea un archivo .env basado en el .env.example: `$ cp .env.example .env`
-3. Instala tu motor de base de datos y crea tu base de datos, dependiendo de tu base de datos, debes crear una variable DATABASE_URL con uno de los valores posibles, asegúrate de reemplazar los valores con la información de tu base de datos:
-
-| Motor     | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgres  | postgres://username:password@localhost:5432/example |
-
-4. Migra las migraciones: `$ pipenv run migrate` (omite si no has hecho cambios en los modelos en `./src/api/models.py`)
-5. Ejecuta las migraciones: `$ pipenv run upgrade`
-6. Ejecuta la aplicación: `$ pipenv run start`
-
-> Nota: Los usuarios de Codespaces pueden conectarse a psql escribiendo: `psql -h localhost -U gitpod example`
-
-### Deshacer una migración
-
-También puedes deshacer una migración ejecutando
-
-```sh
-$ pipenv run downgrade
-```
-
-### Población de la tabla de usuarios en el backend
-
-Para insertar usuarios de prueba en la base de datos, ejecuta el siguiente comando:
-
-```sh
-$ flask insert-test-users 5
-```
-
-Y verás el siguiente mensaje:
+## Estructura del proyecto
 
 ```
-    Creating test users
-    test_user1@test.com created.
-    test_user2@test.com created.
-    test_user3@test.com created.
-    test_user4@test.com created.
-    test_user5@test.com created.
-    Users created successfully!
+mi-plantilla-base/
+│
+├── client/                # Frontend React (Vite o CRA)
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── server/                # Backend Flask
+│   ├── app/
+│   ├── requirements.txt
+│   └── run.py
+│
+├── .gitignore
+├── README.md
+└── LICENSE
 ```
 
-### **Nota importante para la base de datos y los datos dentro de ella**
+El repositorio ya separa el frontend en `src/front` y la API de Flask en `src/api`. Usa el árbol como guía si quieres expandirlo hacia carpetas dedicadas `client/` y `server/`.
 
-Cada entorno de Github Codespace tendrá **su propia base de datos**, por lo que si estás trabajando con más personas, cada uno tendrá una base de datos diferente y diferentes registros dentro de ella. Estos datos **se perderán**, así que no pases demasiado tiempo creando registros manualmente para pruebas, en su lugar, puedes automatizar la adición de registros a tu base de datos editando el archivo ```commands.py``` dentro de la carpeta ```/src/api```. Edita la línea 32 de la función ```insert_test_data``` para insertar los datos según tu modelo (usa la función ```insert_test_users``` anterior como ejemplo). Luego, todo lo que necesitas hacer es ejecutar ```pipenv run insert-test-data```.
+## Primeros pasos
 
-### Instalación manual del Front-End:
+### 1. Crea tu repositorio desde la plantilla
 
--   Asegúrate de estar usando la versión 20 de node y de que ya hayas instalado y ejecutado correctamente el backend.
+1. Haz clic en **Use this template → Create a new repository**.
+2. Clona tu nuevo repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/tu-nuevo-proyecto.git
+   cd tu-nuevo-proyecto
+   ```
 
-1. Instala los paquetes: `$ npm install`
-2. ¡Empieza a codificar! inicia el servidor de desarrollo de webpack `$ npm run start`
+### 2. Configura tu entorno local
 
-## ¡Publica tu sitio web!
+Trabaja cada entorno por separado para mantener cada herramienta enfocada en su responsabilidad.
 
-Esta plantilla está 100% lista para desplegarse con Render.com y Heroku en cuestión de minutos. Por favor, lee la [documentación oficial al respecto](https://4geeks.com/docs/start/deploy-to-render-com).
+#### Backend (Flask + Pipenv)
 
-### Contribuyentes
+```bash
+cd server
+pipenv install
+cp .env.example .env  # configura secretos, URLs, etc.
+pipenv run start      # inicia el servidor de desarrollo de Flask
+```
 
-Esta plantilla fue construida como parte del [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) de 4Geeks Academy por [Alejandro Sanchez](https://twitter.com/alesanchezr) y muchos otros contribuyentes. Descubre más sobre nuestro [Curso de Desarrollador Full Stack](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer) y [Bootcamp de Ciencia de Datos](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+- Usa `pipenv run migrate` / `pipenv run upgrade` para manejar migraciones.
+- Define comandos personalizados en `app/commands.py` y ejecútalos con `pipenv run <comando>`.
+- Guarda parámetros solo de desarrollo (por ejemplo, `FLASK_DEBUG=1`) en `.env` y usa `.env.production` para despliegues.
 
-Puedes encontrar otras plantillas y recursos como este en la [página de github de la escuela](https://github.com/4geeksacademy/).
+#### Frontend (React + npm)
+
+```bash
+cd client
+npm install
+npm run start   # servidor de Vite con recarga instantánea
+```
+
+- Agrega scripts extra (tests, lint, builds) en `client/package.json` y ejecútalos con `npm run <script>`.
+- Configura variables de entorno con `.env.development` / `.env.production` y publícalas con el prefijo `VITE_`.
+- En local, define `VITE_API_URL=http://localhost:3001` (o el puerto de tu backend) para conectar el cliente con Flask.
+
+### 3. Usa la plantilla dentro de GitHub
+
+Mantén un flujo consistente automatizando las verificaciones en GitHub. El siguiente ejemplo de GitHub Actions instala ambos
+entornos, cachea dependencias y ejecuta los comandos clave mencionados arriba:
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pipenv'
+      - run: pip install pipenv
+      - run: pipenv install --dev
+        working-directory: server
+      - run: npm install
+        working-directory: client
+      - run: pipenv run pytest
+        working-directory: server
+      - run: npm run test -- --watch=false
+        working-directory: client
+```
+
+- Guarda secretos (como `DATABASE_URL`, `FLASK_SECRET_KEY` o `VITE_API_URL`) en **Settings → Secrets and variables → Actions**.
+- Para builds de previsualización, crea un segundo job que ejecute `npm run build` y cargue `client/dist/` como artefacto.
+- Combina el workflow con reglas de protección de rama para que cada pull request pase la tubería antes de hacer merge.
+
+## Tips para tu flujo de desarrollo
+
+| Tarea                               | Comando                              |
+|-------------------------------------|--------------------------------------|
+| Ejecutar pruebas del backend        | `pipenv run pytest`                  |
+| Formatear código del backend        | `pipenv run black app`               |
+| Ejecutar pruebas del frontend       | `npm run test`                       |
+| Crear build de producción frontend  | `npm run build`                      |
+| Previsualizar el build compilado    | `npm run preview`                    |
+
+Adapta o amplía estos comandos según tus necesidades.
+
+## Notas de despliegue
+
+- **Render**: Despliega el backend con `render.yaml` y sirve el frontend como sitio estático.
+- **Vercel**: Apunta a `client/` con `npm run build` como comando de build.
+- **Docker**: Une ambos servicios con un Dockerfile multi-stage o con Docker Compose.
+
+## Ideal para
+
+- 🚀 Prototipos rápidos
+- 💼 Aplicaciones comerciales listas
+- 🧠 Proyectos personales o de portafolio
+- ⚙️ MVPs y pruebas de concepto
+
+## Licencia
+
+Distribuido bajo la licencia MIT. Consulta [`LICENSE`](LICENSE) para más detalles.
+
+Hecho con ambición por **JCGJ94** — sigue construyendo, sigue aprendiendo.
