@@ -1,6 +1,6 @@
-# WebApp boilerplate with React JS and Flask API
+# JC-Code Fullstack Starter Template
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+![JC-Code logo](public/jc-code-logo.svg)
 
 - Documentation can be found here: https://4geeks.com/docs/start/react-flask-template
 - Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
@@ -30,64 +30,137 @@ The [Quick start guide](docs/QUICKSTART.md) covers optional tweaks (SQLite URL, 
 - New `/api/health` endpoint for monitoring and a service layer on the frontend (`src/front/services`) that wraps API calls.
 - Basic test suite powered by Pytest (`tests/`) to ensure the template stays stable as you extend it.
 
-### 1) Installation:
+> ¿Buscas la versión en español? [Haz clic aquí](README.es.md).
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+## Highlights
 
-It is recomended to install the backend first, make sure you have Python 3.10, Pipenv and a database engine (Posgress recomended)
+- ⚛️ **Frontend:** React (Vite-ready) with sensible defaults for fast iteration.
+- 🐍 **Backend:** Flask with a modular structure and REST-friendly blueprints.
+- 🔗 **API bridge:** Ready-to-use communication layer between client and server.
+- ⚙️ **Environment presets:** Base configuration for development and production.
+- 🧱 **Folder layout:** Clean, scalable structure that grows with your project.
+- 🧩 **Deployment ready:** Works with Render, Vercel, Docker, and similar platforms.
 
 1. Install the python packages: `$ pipenv install` *(or run `npm run bootstrap` to install Python and Node dependencies together)*
 2. Create a .env file based on the .env.example: `$ cp .env.example .env`
 3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+```
+mi-plantilla-base/
+│
+├── client/                # React frontend (Vite or CRA)
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── server/                # Flask backend
+│   ├── app/
+│   ├── requirements.txt
+│   └── run.py
+│
+├── .gitignore
+├── README.md
+└── LICENSE
+```
 
 4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
 5. Run the migrations: `$ pipenv run upgrade`
 6. Run the application in debug mode: `$ pipenv run dev`
 7. (Optional) Run backend tests: `$ pipenv run pytest`
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+## Getting started
 
-### Undo a migration
+### 1. Create your repo from the template
 
-You are also able to undo a migration by running
+1. Click **Use this template → Create a new repository**.
+2. Clone the freshly created repository:
+   ```bash
+   git clone https://github.com/tuusuario/tu-nuevo-proyecto.git
+   cd tu-nuevo-proyecto
+   ```
 
-```sh
-$ pipenv run downgrade
+### 2. Configure your local environment
+
+Work with both environments independently so each toolchain remains focused on its job.
+
+#### Backend (Flask + Pipenv)
+
+```bash
+cd server
+pipenv install
+cp .env.example .env  # configure secrets, URLs, etc.
+pipenv run start      # launches the Flask development server
 ```
 
-### Backend Populate Table Users
+- Use `pipenv run migrate` / `pipenv run upgrade` to manage database migrations.
+- Create custom commands inside `app/commands.py` and execute them with `pipenv run <command>`.
+- Keep development-only settings (e.g., debug flags) inside `.env` and production settings in `.env.production`.
 
-To insert test users in the database execute the following command:
+#### Frontend (React + npm)
 
-```sh
-$ flask insert-test-users 5
+```bash
+cd client
+npm install
+npm run start   # vite dev server with instant HMR
 ```
 
-And you will see the following message:
+- Add extra scripts (tests, linting, builds) to `client/package.json` and run them with `npm run <script>`.
+- Configure environment variables with `.env.development` / `.env.production` and expose them with the `VITE_` prefix.
+- When working locally, set `VITE_API_URL=http://localhost:3001` (or your backend port) to point the client to Flask.
 
+### 3. Use the template inside GitHub
+
+You can keep a consistent workflow by automating checks in GitHub. The following GitHub Actions snippet installs both
+environments, caches dependencies, and runs the key scripts defined above:
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pipenv'
+      - run: pip install pipenv
+      - run: pipenv install --dev
+        working-directory: server
+      - run: npm install
+        working-directory: client
+      - run: pipenv run pytest
+        working-directory: server
+      - run: npm run test -- --watch=false
+        working-directory: client
 ```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
 
-### **Important note for the database and the data inside it**
+- Store secrets (such as `DATABASE_URL`, `FLASK_SECRET_KEY`, or `VITE_API_URL`) in **Settings → Secrets and variables → Actions**.
+- For preview builds, add a second job that runs `npm run build` and uploads the `client/dist/` folder as an artifact.
+- Pair the workflow with branch protection rules so every pull request must pass the pipeline before merging.
 
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
+## Development workflow tips
 
-### Front-End Manual Installation:
+| Task                                | Command                             |
+|-------------------------------------|-------------------------------------|
+| Run backend tests                   | `pipenv run pytest`                 |
+| Format backend code (example)       | `pipenv run black app`              |
+| Run frontend unit tests             | `npm run test`                      |
+| Create production frontend build    | `npm run build`                     |
+| Serve the compiled frontend preview | `npm run preview`                   |
 
--   Make sure you are using node version 20 and that you have already successfully installed and runned the backend.
+Feel free to replace or extend these commands according to your stack.
+
+## Deployment notes
 
 1. Install the packages: `$ npm install` *(already covered if you ran `npm run bootstrap`)*
 2. Start coding with the full stack: `$ npm run dev:full` (or run `$ npm run dev:front` if you only need React)
@@ -102,12 +175,15 @@ The React application ships with Bootstrap and Tailwind CSS so you can pick the 
 
 The default value is `bootstrap`, which keeps backwards compatibility with previous versions of the template.
 
-## Publish your website!
+## Ideal for
 
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://4geeks.com/docs/start/deploy-to-render-com).
+- 🚀 Rapid prototypes
+- 💼 Production-ready commercial apps
+- 🧠 Personal or portfolio projects
+- ⚙️ MVPs and proof of concept iterations
 
-### Contributors
+## License
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+Crafted with ambition by **JCGJ94** — keep building, keep learning!
