@@ -8,6 +8,27 @@ Construye aplicaciones web usando React.js para el front end y python/flask para
 - Despliegue rápido a Render [en solo unos pocos pasos aquí](https://4geeks.com/es/docs/start/despliega-con-render-com).
 - Uso del archivo .env.
 - Integración de SQLAlchemy para la abstracción de bases de datos.
+- Arquitectura lista para escalar documentada en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) con `app_factory`, extensiones
+  reutilizables y capa de servicios en el frontend.
+- Capa visual configurable que te permite alternar entre Bootstrap y Tailwind mediante la variable de entorno `VITE_UI_LIBRARY`.
+- Bucle de desarrollo con un solo comando: `npm run dev:full` inicia la API en Flask y el servidor de Vite al mismo tiempo.
+
+## Inicio rápido (TL;DR)
+
+1. Copia el archivo de variables: `cp .env.example .env`.
+2. Instala todas las dependencias con un solo comando: `npm run bootstrap` (o ejecuta `bash scripts/bootstrap.sh`, `pipenv install` y `npm install`).
+3. Ejecuta toda la pila: `npm run dev:full`.
+
+Si prefieres usar scripts de shell directamente, `bash scripts/bootstrap.sh` realiza la misma configuración que `npm run bootstrap`.
+
+La guía de [Inicio rápido](docs/INICIO_RAPIDO.md) explica ajustes opcionales (URL de SQLite, ejecutar servicios por separado, etc.).
+
+### Novedades principales
+
+- Configuración centralizada en `src/config` con soporte para entornos de desarrollo, producción y pruebas.
+- Fábrica de aplicaciones (`src/app_factory.py`) que permite personalizar el backend sin tocar los puntos de entrada.
+- Nuevo endpoint `/api/health` para monitoreo y servicios frontend (`src/front/services`) que encapsulan las llamadas a la API.
+- Suite de pruebas básica con Pytest (`tests/`) para garantizar la estabilidad de la plantilla.
 
 ### 1) Instalación:
 
@@ -15,7 +36,7 @@ Construye aplicaciones web usando React.js para el front end y python/flask para
 
 Se recomienda instalar el backend primero, asegúrate de tener Python 3.10, Pipenv y un motor de base de datos (se recomienda Posgres).
 
-1. Instala los paquetes de python: `$ pipenv install`
+1. Instala los paquetes de python: `$ pipenv install` *(o ejecuta `npm run bootstrap` para instalar Python y Node al mismo tiempo)*
 2. Crea un archivo .env basado en el .env.example: `$ cp .env.example .env`
 3. Instala tu motor de base de datos y crea tu base de datos, dependiendo de tu base de datos, debes crear una variable DATABASE_URL con uno de los valores posibles, asegúrate de reemplazar los valores con la información de tu base de datos:
 
@@ -27,7 +48,8 @@ Se recomienda instalar el backend primero, asegúrate de tener Python 3.10, Pipe
 
 4. Migra las migraciones: `$ pipenv run migrate` (omite si no has hecho cambios en los modelos en `./src/api/models.py`)
 5. Ejecuta las migraciones: `$ pipenv run upgrade`
-6. Ejecuta la aplicación: `$ pipenv run start`
+6. Ejecuta la aplicación en modo debug: `$ pipenv run dev`
+7. (Opcional) Ejecuta las pruebas del backend: `$ pipenv run pytest`
 
 > Nota: Los usuarios de Codespaces pueden conectarse a psql escribiendo: `psql -h localhost -U gitpod example`
 
@@ -67,8 +89,18 @@ Cada entorno de Github Codespace tendrá **su propia base de datos**, por lo que
 
 -   Asegúrate de estar usando la versión 20 de node y de que ya hayas instalado y ejecutado correctamente el backend.
 
-1. Instala los paquetes: `$ npm install`
-2. ¡Empieza a codificar! inicia el servidor de desarrollo de webpack `$ npm run start`
+1. Instala los paquetes: `$ npm install` *(ya cubierto si ejecutaste `npm run bootstrap`)*
+2. ¡Empieza a codificar con toda la pila! `$ npm run dev:full` (o ejecuta `$ npm run dev:front` si solo necesitas React)
+
+### Elegir tu librería de UI
+
+La aplicación de React incluye Bootstrap y Tailwind CSS para que selecciones el toolkit que mejor se adapte a cada proyecto:
+
+1. Copia el archivo de entorno si todavía no lo has hecho: `cp .env.example .env`.
+2. Define `VITE_UI_LIBRARY` con los valores `bootstrap`, `tailwind` o `both`.
+3. Reinicia el servidor de desarrollo de Vite para aplicar los estilos nuevos.
+
+El valor por defecto es `bootstrap`, manteniendo la compatibilidad con versiones anteriores de la plantilla.
 
 ## ¡Publica tu sitio web!
 

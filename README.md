@@ -8,6 +8,27 @@ Build web applications using React.js for the front end and python/flask for you
 - Fast deployment to Render [in just a few steps here](https://4geeks.com/docs/start/deploy-to-render-com).
 - Use of .env file.
 - SQLAlchemy integration for database abstraction.
+- Ready-to-extend architecture described in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) with an application factory, reusable
+  extensions and a services layer for the frontend.
+- Configurable UI layer that lets you switch between Bootstrap and Tailwind through the `VITE_UI_LIBRARY` environment variable.
+- One-command development loop via `npm run dev:full`, which starts the Flask API and the Vite dev server together.
+
+## Quick start (TL;DR)
+
+1. Copy the environment template: `cp .env.example .env`.
+2. Install all dependencies in one go: `npm run bootstrap` (or run `bash scripts/bootstrap.sh`, `pipenv install` and `npm install`).
+3. Launch everything at once: `npm run dev:full`.
+
+If you prefer running shell scripts directly, `bash scripts/bootstrap.sh` performs the same setup as `npm run bootstrap`.
+
+The [Quick start guide](docs/QUICKSTART.md) covers optional tweaks (SQLite URL, running services separately, etc.).
+
+### Highlights of this fork
+
+- Centralized configuration through `src/config` with first-class support for development, production and testing environments.
+- Application factory (`src/app_factory.py`) that makes it trivial to customize the backend while keeping the entry point compact.
+- New `/api/health` endpoint for monitoring and a service layer on the frontend (`src/front/services`) that wraps API calls.
+- Basic test suite powered by Pytest (`tests/`) to ensure the template stays stable as you extend it.
 
 ### 1) Installation:
 
@@ -15,7 +36,7 @@ Build web applications using React.js for the front end and python/flask for you
 
 It is recomended to install the backend first, make sure you have Python 3.10, Pipenv and a database engine (Posgress recomended)
 
-1. Install the python packages: `$ pipenv install`
+1. Install the python packages: `$ pipenv install` *(or run `npm run bootstrap` to install Python and Node dependencies together)*
 2. Create a .env file based on the .env.example: `$ cp .env.example .env`
 3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
@@ -27,7 +48,8 @@ It is recomended to install the backend first, make sure you have Python 3.10, P
 
 4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
 5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+6. Run the application in debug mode: `$ pipenv run dev`
+7. (Optional) Run backend tests: `$ pipenv run pytest`
 
 > Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
 
@@ -67,8 +89,18 @@ Every Github codespace environment will have **its own database**, so if you're 
 
 -   Make sure you are using node version 20 and that you have already successfully installed and runned the backend.
 
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
+1. Install the packages: `$ npm install` *(already covered if you ran `npm run bootstrap`)*
+2. Start coding with the full stack: `$ npm run dev:full` (or run `$ npm run dev:front` if you only need React)
+
+### Choosing your UI library
+
+The React application ships with Bootstrap and Tailwind CSS so you can pick the toolkit that best fits each project:
+
+1. Copy the environment file template if you have not already done so: `cp .env.example .env`.
+2. Set the `VITE_UI_LIBRARY` variable to `bootstrap`, `tailwind` or `both`.
+3. Restart the Vite dev server so the new styles are applied.
+
+The default value is `bootstrap`, which keeps backwards compatibility with previous versions of the template.
 
 ## Publish your website!
 
