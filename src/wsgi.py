@@ -1,7 +1,11 @@
-# This file was created to run the application on heroku using gunicorn.
-# Read more about it here: https://devcenter.heroku.com/articles/python-gunicorn
+"""WSGI entry point for production servers."""
 
-from app import app as application
+from __future__ import annotations
 
-if __name__ == "__main__":
+from app_factory import create_app
+
+application = create_app()
+
+
+if __name__ == "__main__":  # pragma: no cover - manual execution helper
     application.run()

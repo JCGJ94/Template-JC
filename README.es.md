@@ -2,7 +2,33 @@
 
 ![Logo JC-Code](public/jc-code-logo.svg)
 
-Una plantilla ligera pero profesional creada por **JCGJ94** para seguir creciendo como desarrollador joven en el mundo tech. Este repositorio conecta un frontend moderno en React con un backend modular en Flask para que avances rápido en proyectos personales, MVPs y productos listos para producción.
+- La documentación se puede encontrar aquí: https://4geeks.com/docs/start/react-flask-template
+- Aquí hay un video sobre [cómo usar esta plantilla](https://www.youtube.com/watch?v=qBz6Ddd2m38)
+- Integrado con Pipenv para la gestión de paquetes.
+- Despliegue rápido a Render [en solo unos pocos pasos aquí](https://4geeks.com/es/docs/start/despliega-con-render-com).
+- Uso del archivo .env.
+- Integración de SQLAlchemy para la abstracción de bases de datos.
+- Arquitectura lista para escalar documentada en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) con `app_factory`, extensiones
+  reutilizables y capa de servicios en el frontend.
+- Capa visual configurable que te permite alternar entre Bootstrap y Tailwind mediante la variable de entorno `VITE_UI_LIBRARY`.
+- Bucle de desarrollo con un solo comando: `npm run dev:full` inicia la API en Flask y el servidor de Vite al mismo tiempo.
+
+## Inicio rápido (TL;DR)
+
+1. Copia el archivo de variables: `cp .env.example .env`.
+2. Instala todas las dependencias con un solo comando: `npm run bootstrap` (o ejecuta `bash scripts/bootstrap.sh`, `pipenv install` y `npm install`).
+3. Ejecuta toda la pila: `npm run dev:full`.
+
+Si prefieres usar scripts de shell directamente, `bash scripts/bootstrap.sh` realiza la misma configuración que `npm run bootstrap`.
+
+La guía de [Inicio rápido](docs/INICIO_RAPIDO.md) explica ajustes opcionales (URL de SQLite, ejecutar servicios por separado, etc.).
+
+### Novedades principales
+
+- Configuración centralizada en `src/config` con soporte para entornos de desarrollo, producción y pruebas.
+- Fábrica de aplicaciones (`src/app_factory.py`) que permite personalizar el backend sin tocar los puntos de entrada.
+- Nuevo endpoint `/api/health` para monitoreo y servicios frontend (`src/front/services`) que encapsulan las llamadas a la API.
+- Suite de pruebas básica con Pytest (`tests/`) para garantizar la estabilidad de la plantilla.
 
 > Looking for the English version? [Click here](README.md).
 
@@ -15,7 +41,9 @@ Una plantilla ligera pero profesional creada por **JCGJ94** para seguir creciend
 - 🧱 **Estructura clara:** Carpetas limpias y escalables para crecer sin caos.
 - 🧩 **Listo para deploy:** Compatible con Render, Vercel, Docker y más.
 
-## Estructura del proyecto
+1. Instala los paquetes de python: `$ pipenv install` *(o ejecuta `npm run bootstrap` para instalar Python y Node al mismo tiempo)*
+2. Crea un archivo .env basado en el .env.example: `$ cp .env.example .env`
+3. Instala tu motor de base de datos y crea tu base de datos, dependiendo de tu base de datos, debes crear una variable DATABASE_URL con uno de los valores posibles, asegúrate de reemplazar los valores con la información de tu base de datos:
 
 ```
 mi-plantilla-base/
@@ -35,7 +63,10 @@ mi-plantilla-base/
 └── LICENSE
 ```
 
-El repositorio ya separa el frontend en `src/front` y la API de Flask en `src/api`. Usa el árbol como guía si quieres expandirlo hacia carpetas dedicadas `client/` y `server/`.
+4. Migra las migraciones: `$ pipenv run migrate` (omite si no has hecho cambios en los modelos en `./src/api/models.py`)
+5. Ejecuta las migraciones: `$ pipenv run upgrade`
+6. Ejecuta la aplicación en modo debug: `$ pipenv run dev`
+7. (Opcional) Ejecuta las pruebas del backend: `$ pipenv run pytest`
 
 ## Primeros pasos
 
@@ -131,9 +162,18 @@ Adapta o amplía estos comandos según tus necesidades.
 
 ## Notas de despliegue
 
-- **Render**: Despliega el backend con `render.yaml` y sirve el frontend como sitio estático.
-- **Vercel**: Apunta a `client/` con `npm run build` como comando de build.
-- **Docker**: Une ambos servicios con un Dockerfile multi-stage o con Docker Compose.
+1. Instala los paquetes: `$ npm install` *(ya cubierto si ejecutaste `npm run bootstrap`)*
+2. ¡Empieza a codificar con toda la pila! `$ npm run dev:full` (o ejecuta `$ npm run dev:front` si solo necesitas React)
+
+### Elegir tu librería de UI
+
+La aplicación de React incluye Bootstrap y Tailwind CSS para que selecciones el toolkit que mejor se adapte a cada proyecto:
+
+1. Copia el archivo de entorno si todavía no lo has hecho: `cp .env.example .env`.
+2. Define `VITE_UI_LIBRARY` con los valores `bootstrap`, `tailwind` o `both`.
+3. Reinicia el servidor de desarrollo de Vite para aplicar los estilos nuevos.
+
+El valor por defecto es `bootstrap`, manteniendo la compatibilidad con versiones anteriores de la plantilla.
 
 ## Ideal para
 
