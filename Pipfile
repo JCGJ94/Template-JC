@@ -7,6 +7,7 @@ verify_ssl = true
 pytest = "*"
 
 [packages]
+flask = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-swagger = "*"
@@ -26,8 +27,8 @@ alembic = "*"
 python_version = "3.10"
 
 [scripts]
-start="flask run -p 3001 -h 0.0.0.0"
-dev="flask --debug run -p 3001 -h 0.0.0.0"
+start="flask --app src/app.py run"
+dev="flask --app src/app.py --debug run --host 127.0.0.1 --port 5000"
 init="flask db init"
 migrate="flask db migrate"
 local="heroku local"
