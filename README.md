@@ -2,6 +2,9 @@
 
 ![JC-Code logo](public/jc-code-logo.svg)
 
+> 🧩 Este repositorio es una plantilla base.  
+> Para iniciar un nuevo proyecto, usa **“Use this template”** arriba ↑
+
 - Documentation can be found here: https://4geeks.com/docs/start/react-flask-template
 - Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
 - Integrated with Pipenv for package managing.
