@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
 
 [packages]
 flask-sqlalchemy = "*"
@@ -22,10 +23,11 @@ sqlalchemy = "*"
 alembic = "*"
 
 [requires]
-python_version = "3.13"
+python_version = "3.10"
 
 [scripts]
 start="flask run -p 3001 -h 0.0.0.0"
+dev="flask --debug run -p 3001 -h 0.0.0.0"
 init="flask db init"
 migrate="flask db migrate"
 local="heroku local"
