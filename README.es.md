@@ -1,6 +1,6 @@
 # Plantilla Fullstack JC-Code
 
-![Logo JC-Code](public/jc-code-logo.svg)
+![Logo JC-Code](public/logo.svg)
 
 Una plantilla ligera pero profesional creada por **JCGJ94** para seguir creciendo como desarrollador joven en el mundo tech. Este repositorio conecta un frontend moderno en React con un backend modular en Flask para que avances rápido en proyectos personales, MVPs y productos listos para producción.
 
@@ -100,8 +100,8 @@ jobs:
           cache-dependency-path: client/package-lock.json
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pipenv'
+          python-version: "3.11"
+          cache: "pipenv"
       - run: pip install pipenv
       - run: pipenv install --dev
         working-directory: server
@@ -119,13 +119,13 @@ jobs:
 
 ## Tips para tu flujo de desarrollo
 
-| Tarea                               | Comando                              |
-|-------------------------------------|--------------------------------------|
-| Ejecutar pruebas del backend        | `pipenv run pytest`                  |
-| Formatear código del backend        | `pipenv run black app`               |
-| Ejecutar pruebas del frontend       | `npm run test`                       |
-| Crear build de producción frontend  | `npm run build`                      |
-| Previsualizar el build compilado    | `npm run preview`                    |
+| Tarea                              | Comando                |
+| ---------------------------------- | ---------------------- |
+| Ejecutar pruebas del backend       | `pipenv run pytest`    |
+| Formatear código del backend       | `pipenv run black app` |
+| Ejecutar pruebas del frontend      | `npm run test`         |
+| Crear build de producción frontend | `npm run build`        |
+| Previsualizar el build compilado   | `npm run preview`      |
 
 Adapta o amplía estos comandos según tus necesidades.
 
