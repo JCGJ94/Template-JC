@@ -5,7 +5,7 @@ Flask + SQLAlchemy backend and React frontend that ship with the repository.
 
 ## Requirements
 
-- Python 3.10
+- Python 3.11
 - [Pipenv](https://pipenv.pypa.io/) for backend dependency management
 - Node.js 20+
 - A database engine (SQLite works out of the box, PostgreSQL is recommended)
@@ -67,6 +67,13 @@ Use `pipenv run downgrade` to undo the last migration if you need to roll back a
 pipenv run pytest   # Backend API smoke tests
 npm run lint        # React lint rules
 ```
+
+## 6. Deploy to Render (free or premium)
+
+1. Push your repo and create a **Blueprint** in Render pointing to `render.yaml`.
+2. Keep `plan: free` for the no-cost tier or switch to `starter`/`pro` before applying the blueprint.
+3. Update the pre-filled environment variables in Render if you need different values for `DATABASE_URL`, `FLASK_APP_KEY`, or `VITE_BASENAME`.
+4. Apply the blueprint—Render runs `render_build.sh` to install dependencies, build the frontend, and run migrations automatically.
 
 ---
 

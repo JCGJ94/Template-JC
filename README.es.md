@@ -2,188 +2,99 @@
 
 ![Logo JC-Code](public/logo.svg)
 
-- La documentación se puede encontrar aquí: https://4geeks.com/docs/start/react-flask-template
-- Aquí hay un video sobre [cómo usar esta plantilla](https://www.youtube.com/watch?v=qBz6Ddd2m38)
-- Integrado con Pipenv para la gestión de paquetes.
-- Despliegue rápido a Render [en solo unos pocos pasos aquí](https://4geeks.com/es/docs/start/despliega-con-render-com).
-- Uso del archivo .env.
-- Integración de SQLAlchemy para la abstracción de bases de datos.
-- Arquitectura lista para escalar documentada en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) con `app_factory`, extensiones
-  reutilizables y capa de servicios en el frontend.
-- Capa visual configurable que te permite alternar entre Bootstrap y Tailwind mediante la variable de entorno `VITE_UI_LIBRARY`.
-- Bucle de desarrollo con un solo comando: `npm run dev:full` inicia la API en Flask y el servidor de Vite al mismo tiempo.
+> 🧩 Este repositorio es el punto de partida.
+> Haz clic en **“Use this template”** para crear tu propio proyecto.
 
-## Inicio rápido (TL;DR)
+¿Buscas la documentación en inglés? [Da clic aquí.](README.md)
+
+## ¿Qué incluye?
+
+- ⚛️ **Frontend:** React sobre Vite con configuraciones listas y una capa visual que cambia entre Bootstrap y Tailwind usando `VITE_UI_LIBRARY`.
+- 🐍 **Backend:** Flask + SQLAlchemy configurado mediante la fábrica de aplicaciones (`src/app_factory.py`) para escalar sin tocar el punto de entrada.
+- 🧱 **Estructura:** Carpeta compartida `src/` con blueprints en `src/api`, configuraciones reutilizables en `src/config` y la app de React en `src/front`.
+- ⚙️ **Experiencia de desarrollo:** Bootstrap en un solo comando (`npm run bootstrap`), servidores sincronizados (`npm run dev:full`) y pruebas con Pytest en `tests/`.
+
+## Requisitos
+
+- Python 3.11
+- [Pipenv](https://pipenv.pypa.io/) para las dependencias del backend
+- Node.js 20 o superior
+
+## Inicio rápido
 
 1. Copia el archivo de variables: `cp .env.example .env`.
-2. Instala todas las dependencias con un solo comando: `npm run bootstrap` (o ejecuta `bash scripts/bootstrap.sh`, `pipenv install` y `npm install`).
-3. Ejecuta toda la pila: `npm run dev:full`.
+2. Instala las dependencias de una vez: `npm run bootstrap` *(o ejecuta `pipenv install` y `npm install` por separado).* 
+3. Levanta ambos servidores juntos: `npm run dev:full`.
+4. (Opcional) Aplica las migraciones: `pipenv run migrate` y luego `pipenv run upgrade`.
 
-Si prefieres usar scripts de shell directamente, `bash scripts/bootstrap.sh` realiza la misma configuración que `npm run bootstrap`.
+¿Prefieres controlar cada servicio? Usa `pipenv run dev` para la API o `npm run dev:front` para el frontend.
 
-La guía de [Inicio rápido](docs/INICIO_RAPIDO.md) explica ajustes opcionales (URL de SQLite, ejecutar servicios por separado, etc.).
+La [guía de inicio rápido](docs/INICIO_RAPIDO.md) detalla flujos alternos (SQLite, terminales separadas, etc.).
 
-### Novedades principales
+## Scripts útiles
 
-- Configuración centralizada en `src/config` con soporte para entornos de desarrollo, producción y pruebas.
-- Fábrica de aplicaciones (`src/app_factory.py`) que permite personalizar el backend sin tocar los puntos de entrada.
-- Nuevo endpoint `/api/health` para monitoreo y servicios frontend (`src/front/services`) que encapsulan las llamadas a la API.
-- Suite de pruebas básica con Pytest (`tests/`) para garantizar la estabilidad de la plantilla.
+| Comando | Descripción |
+| --- | --- |
+| `npm run dev:full` | Lanza Flask (`pipenv run dev`) y Vite al mismo tiempo. |
+| `npm run dev:front` | Solo frontend con recarga en caliente. |
+| `pipenv run dev` | Solo backend con recarga automática. |
+| `pipenv run migrate` / `pipenv run upgrade` | Gestiona las migraciones. |
+| `pipenv run pytest` | Ejecuta las pruebas del backend en `tests/`. |
+| `npm run lint` | Aplica las reglas de lint al proyecto React. |
 
-> Looking for the English version? [Click here](README.md).
-
-## Destacados
-
-- ⚛️ **Frontend:** React (lista para Vite) con configuraciones pensadas para iterar rápido.
-- 🐍 **Backend:** Flask con estructura modular y blueprints orientados a REST.
-- 🔗 **Puente API:** Comunicación lista entre cliente y servidor.
-- ⚙️ **Entornos:** Configuración base para desarrollo y producción.
-- 🧱 **Estructura clara:** Carpetas limpias y escalables para crecer sin caos.
-- 🧩 **Listo para deploy:** Compatible con Render, Vercel, Docker y más.
-
-1. Instala los paquetes de python: `$ pipenv install` *(o ejecuta `npm run bootstrap` para instalar Python y Node al mismo tiempo)*
-2. Crea un archivo .env basado en el .env.example: `$ cp .env.example .env`
-3. Instala tu motor de base de datos y crea tu base de datos, dependiendo de tu base de datos, debes crear una variable DATABASE_URL con uno de los valores posibles, asegúrate de reemplazar los valores con la información de tu base de datos:
+## Estructura del proyecto
 
 ```
-mi-plantilla-base/
-│
-├── client/                # Frontend React (Vite o CRA)
-│   ├── src/
-│   ├── public/
-│   └── package.json
-│
-├── server/                # Backend Flask
-│   ├── app/
-│   ├── requirements.txt
-│   └── run.py
-│
-├── .gitignore
-├── README.md
-└── LICENSE
+.
+├── docs/                  # Guías y notas de arquitectura
+├── public/                # Recursos estáticos servidos por Vite
+├── scripts/               # Scripts auxiliares (bootstrap, orquestación)
+├── src/
+│   ├── api/               # Blueprints, modelos y rutas de Flask
+│   ├── config/            # Configuraciones por entorno
+│   ├── front/             # Aplicación de React (componentes, páginas, store)
+│   ├── app.py             # Punto de entrada de Flask
+│   └── app_factory.py     # Fábrica de aplicaciones para todos los entornos
+├── tests/                 # Pruebas de Pytest para la API
+├── Pipfile / Pipfile.lock # Dependencias del backend
+└── package.json           # Dependencias del frontend y scripts compartidos
 ```
 
-4. Migra las migraciones: `$ pipenv run migrate` (omite si no has hecho cambios en los modelos en `./src/api/models.py`)
-5. Ejecuta las migraciones: `$ pipenv run upgrade`
-6. Ejecuta la aplicación en modo debug: `$ pipenv run dev`
-7. (Opcional) Ejecuta las pruebas del backend: `$ pipenv run pytest`
+## Variables de entorno
 
-## Primeros pasos
+- `DATABASE_URL`: cadena de conexión utilizada por SQLAlchemy (PostgreSQL por defecto; SQLite también funciona).
+- `FLASK_APP_KEY`: clave secreta para las sesiones de Flask.
+- `VITE_UI_LIBRARY`: elige `bootstrap`, `tailwind` o `both` para cargar el estilo deseado en React.
+- `VITE_BASENAME` y `VITE_BACKEND_URL`: ajustan el enrutamiento y la URL de la API en el frontend.
 
-### 1. Crea tu repositorio desde la plantilla
+Actualiza `.env` según tus necesidades y reinicia los servidores para aplicar los cambios.
 
-1. Haz clic en **Use this template → Create a new repository**.
-2. Clona tu nuevo repositorio:
-   ```bash
-   git clone https://github.com/tuusuario/tu-nuevo-proyecto.git
-   cd tu-nuevo-proyecto
-   ```
+## Pruebas y calidad
 
-### 2. Configura tu entorno local
-
-Trabaja cada entorno por separado para mantener cada herramienta enfocada en su responsabilidad.
-
-#### Backend (Flask + Pipenv)
-
-```bash
-cd server
-pipenv install
-cp .env.example .env  # configura secretos, URLs, etc.
-pipenv run start      # inicia el servidor de desarrollo de Flask
-```
-
-- Usa `pipenv run migrate` / `pipenv run upgrade` para manejar migraciones.
-- Define comandos personalizados en `app/commands.py` y ejecútalos con `pipenv run <comando>`.
-- Guarda parámetros solo de desarrollo (por ejemplo, `FLASK_DEBUG=1`) en `.env` y usa `.env.production` para despliegues.
-
-#### Frontend (React + npm)
-
-```bash
-cd client
-npm install
-npm run start   # servidor de Vite con recarga instantánea
-```
-
-- Agrega scripts extra (tests, lint, builds) en `client/package.json` y ejecútalos con `npm run <script>`.
-- Configura variables de entorno con `.env.development` / `.env.production` y publícalas con el prefijo `VITE_`.
-- En local, define `VITE_API_URL=http://localhost:3001` (o el puerto de tu backend) para conectar el cliente con Flask.
-
-### 3. Usa la plantilla dentro de GitHub
-
-Mantén un flujo consistente automatizando las verificaciones en GitHub. El siguiente ejemplo de GitHub Actions instala ambos
-entornos, cachea dependencias y ejecuta los comandos clave mencionados arriba:
-
-```yaml
-# .github/workflows/ci.yml
-name: CI
-on:
-  push:
-  pull_request:
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: client/package-lock.json
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: "pipenv"
-      - run: pip install pipenv
-      - run: pipenv install --dev
-        working-directory: server
-      - run: npm install
-        working-directory: client
-      - run: pipenv run pytest
-        working-directory: server
-      - run: npm run test -- --watch=false
-        working-directory: client
-```
-
-- Guarda secretos (como `DATABASE_URL`, `FLASK_SECRET_KEY` o `VITE_API_URL`) en **Settings → Secrets and variables → Actions**.
-- Para builds de previsualización, crea un segundo job que ejecute `npm run build` y cargue `client/dist/` como artefacto.
-- Combina el workflow con reglas de protección de rama para que cada pull request pase la tubería antes de hacer merge.
-
-## Tips para tu flujo de desarrollo
-
-| Tarea                              | Comando                |
-| ---------------------------------- | ---------------------- |
-| Ejecutar pruebas del backend       | `pipenv run pytest`    |
-| Formatear código del backend       | `pipenv run black app` |
-| Ejecutar pruebas del frontend      | `npm run test`         |
-| Crear build de producción frontend | `npm run build`        |
-| Previsualizar el build compilado   | `npm run preview`      |
-
-Adapta o amplía estos comandos según tus necesidades.
+- Backend: `pipenv run pytest`
+- Lint del frontend: `npm run lint`
+- Previsualizar el build: `npm run build` seguido de `npm run preview`
 
 ## Notas de despliegue
 
-1. Instala los paquetes: `$ npm install` *(ya cubierto si ejecutaste `npm run bootstrap`)*
-2. ¡Empieza a codificar con toda la pila! `$ npm run dev:full` (o ejecuta `$ npm run dev:front` si solo necesitas React)
+- El repositorio incluye configuraciones para Render (`render.yaml` + `Dockerfile.render`).
+- `render.yaml` viene listo para el plan gratuito y permite pasar a premium cambiando `plan: free` por `starter` o `pro`.
+- `render_build.sh` instala ambos stacks y ejecuta las migraciones para que backend y frontend lleguen alineados al despliegue.
+- `npm run build` genera un frontend listo para producción en `dist/`.
+- Usa `.env.production` (frontend) y variables de entorno en tu plataforma para mantener los secretos fuera del código.
 
-### Elegir tu librería de UI
+### Render: despliegue gratis o premium en minutos
 
-La aplicación de React incluye Bootstrap y Tailwind CSS para que selecciones el toolkit que mejor se adapte a cada proyecto:
+1. Confirma tus cambios y sube tu repositorio a GitHub o GitLab.
+2. En Render, selecciona **Blueprint > New Blueprint Instance** y apunta al repositorio.
+3. (Opcional) Ajusta el campo `plan` en `render.yaml` si necesitas más recursos; déjalo en `free` para permanecer en el nivel gratuito.
+4. Revisa las variables de entorno preconfiguradas (por ejemplo, `FLASK_APP_KEY`, `DATABASE_URL`, `VITE_BASENAME`) y actualiza los valores en el panel de Render si lo necesitas.
+5. Pulsa **Apply**: Render aprovisionará el servicio, ejecutará `render_build.sh` (instala, construye y migra) y arrancará Gunicorn con la entrada del `Procfile` ya incluida.
 
-1. Copia el archivo de entorno si todavía no lo has hecho: `cp .env.example .env`.
-2. Define `VITE_UI_LIBRARY` con los valores `bootstrap`, `tailwind` o `both`.
-3. Reinicia el servidor de desarrollo de Vite para aplicar los estilos nuevos.
-
-El valor por defecto es `bootstrap`, manteniendo la compatibilidad con versiones anteriores de la plantilla.
-
-## Ideal para
-
-- 🚀 Prototipos rápidos
-- 💼 Aplicaciones comerciales listas
-- 🧠 Proyectos personales o de portafolio
-- ⚙️ MVPs y pruebas de concepto
+¿Necesitas una base de datos rápida? El blueprint crea PostgreSQL automáticamente; puedes cambiar `DATABASE_URL` por SQLite en `.env` si prefieres un archivo local.
 
 ## Licencia
 
 Distribuido bajo la licencia MIT. Consulta [`LICENSE`](LICENSE) para más detalles.
 
-Hecho con ambición por **JCGJ94** — sigue construyendo, sigue aprendiendo.
+Creado con ambición por **JCGJ94** — ¡sigue construyendo y aprendiendo!
