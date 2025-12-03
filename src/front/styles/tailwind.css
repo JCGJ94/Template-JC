@@ -12,7 +12,7 @@
   }
 }
 
-@layer components {
+/* @layer components {
   .container {
     @apply mx-auto w-full max-w-5xl px-4;
   }
@@ -116,7 +116,7 @@
   .text-white {
     @apply text-white;
   }
-}
+} */
 
 @layer utilities {
   .mt-5 {

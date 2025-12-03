@@ -6,45 +6,35 @@
 	"version": "1.0.1",
 	"description": "",
 	"main": "index.js",
-        "scripts": {
-                "dev": "npm run dev:front",
-                "dev:front": "vite",
-                "dev:api": "pipenv run dev",
-                "dev:full": "node ./scripts/dev-full.mjs",
-                "bootstrap": "node ./scripts/bootstrap.mjs",
-                "start": "vite",
-                "build": "vite build",
-                "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-                "preview": "vite preview"
-        },
-	"author": {
-		"name": "Alejandro Sanchez",
-		"url": "http://alesanchezr.com/"
+	"scripts": {
+		"dev": "npm run dev:front",
+		"dev:front": "vite",
+		"dev:api": "pipenv run dev",
+		"dev:full": "node ./scripts/dev-full.mjs",
+		"bootstrap": "node ./scripts/bootstrap.mjs",
+		"start": "vite",
+		"build": "vite build",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
 	},
-	"contributors": [
-		{
-			"name": "Alejandro Sanchez",
-			"url": "http://alesanchezr.com/"
-		},
-		{
-			"name": "Ignacio Cordoba",
-			"url": "http://github.com/nachovz"
-		}
-	],
+	"author": {
+		"name": "Jose Carlos"
+	},
+	"contributors": [],
 	"license": "ISC",
-        "devDependencies": {
-                "@types/react": "^18.2.18",
-                "@types/react-dom": "^18.2.7",
-                "@vitejs/plugin-react": "^4.0.4",
-                "autoprefixer": "^10.4.16",
-                "eslint": "^8.46.0",
-                "eslint-plugin-react": "^7.33.1",
-                "eslint-plugin-react-hooks": "^4.6.0",
-                "eslint-plugin-react-refresh": "^0.4.3",
-                "postcss": "^8.4.31",
-                "tailwindcss": "^3.3.5",
-                "vite": "^4.4.8"
-        },
+	"devDependencies": {
+		"@types/react": "^18.2.18",
+		"@types/react-dom": "^18.2.7",
+		"@vitejs/plugin-react": "^4.0.4",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.46.0",
+		"eslint-plugin-react": "^7.33.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"postcss": "^8.4.31",
+		"tailwindcss": "^3.3.5",
+		"vite": "^4.4.8"
+	},
 	"babel": {
 		"presets": [
 			"@babel/preset-env",
@@ -60,11 +50,11 @@
 			]
 		]
 	},
-        "dependencies": {
-                "prop-types": "^15.8.1",
-                "react": "^18.2.0",
-                "react-dom": "^18.2.0",
-                "react-router-dom": "^6.18.0",
-                "bootstrap": "^5.3.2"
-        }
+	"dependencies": {
+		"prop-types": "^15.8.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.18.0",
+		"bootstrap": "^5.3.2"
+	}
 }

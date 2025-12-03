@@ -4,10 +4,10 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 1rem;
-  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 60%),
-    radial-gradient(circle at bottom, rgba(236, 72, 153, 0.12), transparent 55%),
-    #030712;
-  color: #f9fafb;
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 50%),
+    radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.06), transparent 50%),
+    var(--color-body-bg);
+  color: var(--color-text-dark);
 }
 
 .home-hero__overlay {

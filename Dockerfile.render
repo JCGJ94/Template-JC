@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:20
 
 RUN apt update \
     && apt install software-properties-common \
@@ -8,6 +8,12 @@ RUN apt update \
 
 WORKDIR /opt/app
 COPY --from=build /opt/app/venv /venv
+COPY --from=build /opt/app/node_modules /node_modules
+COPY --from=build /opt/app/static /static
+COPY --from=build /opt/app/templates /templates
+COPY --from=build /opt/app/migrations /migrations
+COPY --from=build /opt/app/requirements.txt /requirements.txt
+COPY --from=build /opt/app/Procfile /Procfile
+
 
 ENV PATH="/opt/app/venv/bin:$PATH"
-ENV NODE_ENV=container

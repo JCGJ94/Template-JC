@@ -2,6 +2,23 @@
 :root {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
+
+  /* Color Palette */
+  --color-header-footer: #030712;
+  --color-header-footer-accent: rgba(59, 130, 246, 0.1);
+  --color-body-bg: #f8fafc;
+  --color-body-secondary: #f1f5f9;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-secondary: #64748b;
+  --color-text-dark: #0f172a;
+  --color-text-light: #f8fafc;
+  --color-border: #e2e8f0;
+}
+
+body {
+  background-color: var(--color-body-bg);
+  color: var(--color-text-dark);
 }
 
 a {
